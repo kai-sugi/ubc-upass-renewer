@@ -1,5 +1,18 @@
 from playwright.sync_api import sync_playwright
 
+SCHOOL = {
+    "BCIT": "British Columbia Institute of Technology",
+    "CapU": "Capilano University",
+    "DC": "Douglas College",
+    "ECU": "Emily Carr University of Art and Design",
+    "KPU": "Kwantlen Polytechnic University",
+    "Langara": "Langara College",
+    "NVIT": "Nicola Valley Institute of Technology",
+    "SFU": "Simon Fraser University",
+    "UBC": "University of British Columbia",
+    "VCC": "Vancouver Community College",
+}
+
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
 
@@ -7,8 +20,14 @@ with sync_playwright() as p:
 
     page.goto("https://upassbc.translink.ca/")
 
-    print("Page title:", page.title())
-    print("Current URL:", page.url)
+    school_dropdown = page.locator("select")
+
+    school_dropdown.select_option(label=SCHOOL["UBC"])
+
+    #options = school_dropdown.locator("option")
+
+    #for i in range(options.count()):
+       #print(options.nth(i).inner_text())
 
     input("Press ENTER to close...")
 
